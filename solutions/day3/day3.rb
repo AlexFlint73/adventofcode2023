@@ -14,7 +14,7 @@ class SchemaParser
       raw_row.each_char.map do |char|
         next char if char.to_i.to_s == char
         next nil if char == '.'
-    
+
         char == '*' ? '*' : "#" # ignore anything except chars we're interested in
       end
     end
@@ -47,8 +47,8 @@ class Sequence
 
   def analyze
     min_x, max_x = @x_list.minmax
-  
-    coords_to_check = 
+
+    coords_to_check =
       ((min_x - 1..max_x + 1).to_a).
         product((@y - 1..@y + 1).to_a).
         then { |coords| filter_valid_coords(coords) }
@@ -93,7 +93,7 @@ class Gear
   def valid?
     @sequences.count == 2
   end
-  
+
   def gear_ratio
     return unless valid?
 
@@ -147,13 +147,13 @@ class Schema
 
         if char.to_i.to_s != char || x == @max_x
           next unless current_sequence
-          
+
           @sequences << current_sequence
           current_sequence = nil
-          
+
           next
         end
-      end 
+      end
     end
 
     @sequences.each(&:analyze)
@@ -162,7 +162,7 @@ end
 
 # Solution
 
-raw_data = File.read("tmp/test_data")
+raw_data = File.read("test_data")
 schema = Schema.init_from_raw_data(raw_data)
 
 first_answer = schema.sequences_sum
